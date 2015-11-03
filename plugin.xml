@@ -41,7 +41,9 @@
     <preference name="APP_NAME" />
     <preference name="APP_SECRET" />
     <preference name="CONFIG_URL" />
-
+    
+    <dependency id="cordova-plugin-inappbrowser" />
+    
     <!-- ios -->
     <platform name="ios">
 
