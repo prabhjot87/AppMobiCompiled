@@ -1,8 +1,6 @@
 package com.appMobiCloud;
 
 import android.app.Activity;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -24,11 +22,9 @@ public class PushHandlerActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.v(TAG, "onCreate");
-		isPushPluginActive =false;
+		isPushPluginActive =AppMobiCloud.isActive();
 		processPushBundle(isPushPluginActive);
-
 		finish();
-
 		if (!isPushPluginActive) {
 			forceMainActivityReload();
 		}
@@ -36,7 +32,6 @@ public class PushHandlerActivity extends Activity {
 
 	/**
 	 * Takes the pushBundle extras from the intent, and sends it through to the
-	 * PushPlugin for processing.
 	 */
 	private void processPushBundle(boolean isPushPluginActive) {
 
@@ -44,8 +39,7 @@ public class PushHandlerActivity extends Activity {
 		if (extras != null) {
 			if (getIntent()
 					.hasExtra(AppMobiCloudPushListener.FROM_NOTIFICATION))
-				isPushStart = true;
-
+					AppMobiCloudPushListener.isPushStart=true;
 		}
 	}
 
@@ -60,13 +54,4 @@ public class PushHandlerActivity extends Activity {
 		startActivity(launchIntent);
 
 	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		final NotificationManager notificationManager = (NotificationManager) this
-				.getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.cancelAll();
-	}
-
 }

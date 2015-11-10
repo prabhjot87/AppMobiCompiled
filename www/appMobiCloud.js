@@ -59,12 +59,23 @@ AppMobiCloud.Notification.PushUserAttributes = function() {
 
 //Check Push User method
 AppMobiCloud.Notification.prototype.checkPushUser = function(user,pass){
+    if(validateUserPass(user) && validateUserPass(pass))
     exec(null, null, "AppMobiCloud", "checkPushUser", [user, pass]);
+    else
+    alert("Invalid user/password entered. Only A-Z, a-z ,0-9 ,_  are allowed for user and password fields");    
 }
 
 //Add Push User method
 AppMobiCloud.Notification.prototype.addPushUser = function(user,pass,email){
+    if(validateUserPass(user) && validateUserPass(pass)){
+    if(validateEmail(email)){
     exec(null,null, "AppMobiCloud", "addPushUser", [user, pass, email]);
+    }else{
+         alert("invalid email");   
+        }
+    }else{
+        alert("Invalid user/password entered. Only A-Z, a-z ,0-9 ,_  are allowed for user and password fields");    
+     }
 }
 
 //Get Notification List
@@ -97,6 +108,7 @@ AppMobiCloud.Notification.prototype.getNotificationData = function(id) {
            
 //Edit Push User method
 AppMobiCloud.Notification.prototype.editPushUser = function(newEmail, newPassword) {
+    if(validateEmail(newEmail) && validateUserPass(newPassword)){
     if( ( newEmail == undefined || newEmail == "" ) &&
       ( newPassword == undefined || newPassword == "" || newPassword.indexOf(' ')!=-1 || newPassword.indexOf('.')!=-1 ) &&
       ( newUser == undefined || newUser == "" || newUser.indexOf(' ')!=-1 || newUser.indexOf('.')!=-1 ) )
@@ -104,6 +116,9 @@ AppMobiCloud.Notification.prototype.editPushUser = function(newEmail, newPasswor
     throw(new Error("Error: AppMobiCloud.notification.editPushUser, No new value (email or password or user) specified. The space (' ') and dot ('.') characters are not allowed in user or password."));
     }
     exec(null, null, "AppMobiCloud", "editPushUser", [newEmail, newPassword, '']);
+    }else{
+     alert("Please enter valid email/password for editPush user.Only A-Z, a-z ,0-9 ,_  are allowed for password.");   
+    }
 };
 
 //Delete Push User method
@@ -127,13 +142,15 @@ AppMobiCloud.Notification.prototype.setPushUserAttributes = function(attributes)
       || attributes.hasOwnProperty("s5") == false || attributes.hasOwnProperty("s6") == false || attributes.hasOwnProperty("n1") == false
       || attributes.hasOwnProperty("n2") == false || attributes.hasOwnProperty("n3") == false || attributes.hasOwnProperty("n4") == false )
     {
-        throw(new Error("Error: AppMobiCloud.notification.setPushUserAttributes: invalid attributes parameter specified. Initialize using 'new AppMobiCloud.Notification.PushUserAttributes'."));
+       alert("invalid attributes parameter specified.");
+        return;
     }
 
     if( (Number(attributes.n1) == NaN) || (Number(attributes.n2) == NaN) ||
       (Number(attributes.n3) == NaN) || (Number(attributes.n4) == NaN) )
     {
-        throw(new Error("Error: AppMobiCloud.notification.setPushUserAttributes: attributes n1,n2,n3,n4 must be numbers."));
+        alert("attributes n1 must be number.");
+        return;
     }
 
     var parsedAttributes = "";
@@ -151,7 +168,20 @@ AppMobiCloud.Notification.prototype.setPushUserAttributes = function(attributes)
 
 //Find Push User method
 AppMobiCloud.Notification.prototype.findPushUser = function(userID, email) {
+    if(userID!=''){
+    if(!validateUserPass(userID)){
+           alert("Please enter valid user for findPushUser. Only A-Z,a-z,0-9, _ are permitted.");
+           return;
+    }
+    }
+    if(email!=''){
+    if(!validateEmail(email)){
+        alert("Please enter valid email for findPushUser.");
+        return;
+    }
+    }
     exec(null, null, "AppMobiCloud", "findPushUser", [userID, email]);
+
 };
 
 //Refresh Push Notifications method
@@ -161,7 +191,11 @@ AppMobiCloud.Notification.prototype.refreshPushNotifications = function() {
 
 //Refresh User Push Notifications method
 AppMobiCloud.Notification.prototype.refreshUserPushNotifications = function(user, pass, device, newerthan) {
+    if(validateUserPass(user) && validateUserPass(pass)){
     exec(null, null, "AppMobiCloud", "refreshUserPushNotifications", [user, pass, device, newerthan]);
+    }else{
+     alert("Please enter valid password forrefreshUserPushNotifications. Only A-Z,a-z,0-9, _ are permitted.");   
+    }
 };
 
 //Read Push Notifications method
@@ -184,6 +218,7 @@ AppMobiCloud.Notification.prototype.deletePushNotifications = function(notificat
 
 //Send Push Notifications method
 AppMobiCloud.Notification.prototype.sendPushNotification = function(userID, message, data) {
+    if(validateUserPass(userID)){
     if( userID  == undefined || userID  == "" ||
       message == undefined || message == "" )
     {
@@ -195,6 +230,10 @@ AppMobiCloud.Notification.prototype.sendPushNotification = function(userID, mess
     if( data.length > 1024 ) throw(new Error("Error: AppMobiCloud.notification.sendPushNotification, data cannot exceed 1024 characters in length."));
 
     exec(null, null, "AppMobiCloud", "sendPushNotification", [userID, message, data]);
+    }
+    else{
+    alert("Please enter valid user for sendPushNotification. Only A-Z,a-z,0-9,_ characters are allowed.");    
+    }
 };
 
 //Broadcast Push Notifications method
@@ -253,7 +292,10 @@ if (typeof AppMobiCloud.notification == "undefined")
     
     
     AppMobiCloud.SecureData.prototype.saveData = function(key, data,isMasterData,saveToServer) {
+        if(validateUserPass(key)&&validateUserPass(data))
         exec(null, null, "AppMobiCloud","saveSecureData",[key, data,isMasterData, saveToServer]);
+        else
+        alert("A-Z, a-z ,0-9 ,_ are permitted for key and value");    
     };
     
     AppMobiCloud.SecureData.prototype.syncData = function() {
@@ -261,7 +303,10 @@ if (typeof AppMobiCloud.notification == "undefined")
     };
     
     AppMobiCloud.SecureData.prototype.readData = function(key,isMasterData) {
+        if(validateUserPass(key))
         exec(null, null, "AppMobiCloud","readSecureData",[key,isMasterData]);
+        else
+        alert("Please enter valid key. Only A-Z, a-z ,0-9 ,_ are permitted for key. ");    
     };
     
     //Get Secure Data List
@@ -319,3 +364,16 @@ catch(e) {
     alert("error in appmobicloud.js : "+e.message);
 }
 
+ function validateEmail(email) {
+    var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+    return re.test(email);
+}
+
+ function validateUserPass(user){
+     if ( /[^A-Za-z0-9_.]/.test(user) ) {
+        return false;  
+    }
+     else{
+      return true;   
+     }
+ }
