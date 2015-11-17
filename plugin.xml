@@ -88,7 +88,10 @@
             <preference name="privateStack" value="true" />
             
             <preference name="webview" value="com.appMobiCloud.XWalkWebViewEngine" />
-            
+             <preference name="xwalkVersion" default="15+"/>
+            <preference name="xwalkCommandLine" default="--disable-pull-to-refresh-effect"/>
+            <preference name="xwalkMode" default="embedded" />
+            <preference name="xwalkMultipleApk" default="true" />
         </config-file>
         
         
@@ -149,8 +152,9 @@
         
         <source-file src="src/android/XWalkWebViewEngine.java" target-dir="src/com/appMobiCloud" />
         
-        
-    </platform>
+        <framework src="src/android/xwalk.gradle" custom="true" type="gradleReference"/>
+   
+   </platform>
     
     <!-- wp8 -->
     <platform name="wp8">
