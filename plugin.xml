@@ -44,7 +44,6 @@
     
     <dependency id="cordova-plugin-inappbrowser" />
     
-    <dependency id="cordova-plugin-crosswalk-webview" />
 
     <!-- ios -->
     <platform name="ios">
