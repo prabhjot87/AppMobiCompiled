@@ -85,13 +85,9 @@
                 <param name="android-package" value="com.appMobiCloud.AppMobiCloud" />
                 <param name="onload" value="true" />
             </feature>
-            <preference name="privateStack" value="true" />
-            
-            <preference name="webview" value="com.appMobiCloud.XWalkWebViewEngine" />
-             <preference name="xwalkVersion" default="15+"/>
-            <preference name="xwalkCommandLine" default="--disable-pull-to-refresh-effect"/>
-            <preference name="xwalkMode" default="embedded" />
-            <preference name="xwalkMultipleApk" default="true" />
+            <preference name="privateStack" value="true" />            
+            <preference name="webview" value="com.appMobiCloud.crosswalkEngine" />
+   
         </config-file>
         
         
@@ -128,31 +124,10 @@
         </config-file>
         
         <source-file src="src/android/libs/AppMobi.jar" target-dir="libs/" />
+        <source-file src="src/android/AppMobiCloud.java" target-dir="src/com/appMobiCloud" />     
+        <source-file src="src/android/PushHandlerActivity.java" target-dir="src/com/appMobiCloud"/>
+        <source-file src="src/android/crosswalkEngine.java" target-dir="src/com/appMobiCloud" />
         
-        
-        
-        
-        <source-file src="src/android/AppMobiCloud.java" target-dir="src/com/appMobiCloud" />
-        
-        
-        <source-file src="src/android/PushHandlerActivity.java" target-dir="src/com/appMobiCloud" />
-      
-          
-        <source-file src="src/android/XWalkCordovaCookieManager.java" target-dir="src/com/appMobiCloud" />
-              
-        <source-file src="src/android/XWalkCordovaResourceClient.java" target-dir="src/com/appMobiCloud" />
-              
-        <source-file src="src/android/XWalkCordovaUiClient.java" target-dir="src/com/appMobiCloud" />
-              
-        <source-file src="src/android/XWalkCordovaView.java" target-dir="src/com/appMobiCloud" />
-              
-        
-        <source-file src="src/android/XWalkExposedJsApi.java" target-dir="src/com/appMobiCloud" />
-              
-        
-        <source-file src="src/android/XWalkWebViewEngine.java" target-dir="src/com/appMobiCloud" />
-        
-        <framework src="src/android/xwalk.gradle" custom="true" type="gradleReference"/>
    
    </platform>
     
